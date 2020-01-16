@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    float jump;
+    float jump = 20f;
     bool isgrounded;
-    bool isdead;
+    bool isdead = false;
     Rigidbody2D rb;
     Animator anim;
     BoxCollider2D bc2d;
-    SpriteRenderer sp;
+    SpriteRenderer sr;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         bc2d = GetComponent<BoxCollider2D>();
-        sp = GetComponent<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -26,18 +26,22 @@ public class movement : MonoBehaviour
     {
       if (isdead ==false)
        {
-            
+           
+
           if (Input.GetKey(KeyCode.D))
             {
-                rb.velocity = new Vector3(1f, 0f, 0f);
+                rb.velocity = new Vector3(3f, 0f, 0f);
                 anim.SetBool("isRun", true);
+                sr.flipX = false;
             }
 
           if(Input.GetKey(KeyCode.A))
             {
-                rb.velocity = new Vector3(-1f, 0f, 0f);
+                rb.velocity = new Vector3(-3f, 0f, 0f);
                 anim.SetBool("isRun", true);
+                sr.flipX = true;
             }
+
           if(Input.GetKey(KeyCode.Space) && isgrounded == true)
             {
                 rb.AddForce(Vector2.up * jump);
