@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    float jump = 20f;
+    float jump = 100f;
     bool isgrounded;
     bool isdead = false;
     Rigidbody2D rb;
@@ -26,18 +26,18 @@ public class movement : MonoBehaviour
     {
       if (isdead ==false)
        {
-           
+          
 
           if (Input.GetKey(KeyCode.D))
             {
-                rb.velocity = new Vector3(3f, 0f, 0f);
+                rb.velocity = new Vector3(4f, 0f, 0f);
                 anim.SetBool("isRun", true);
                 sr.flipX = false;
             }
 
           if(Input.GetKey(KeyCode.A))
             {
-                rb.velocity = new Vector3(-3f, 0f, 0f);
+                rb.velocity = new Vector3(-4f, 0f, 0f);
                 anim.SetBool("isRun", true);
                 sr.flipX = true;
             }
@@ -50,5 +50,11 @@ public class movement : MonoBehaviour
                 isgrounded = false;
             }
        }
+    }
+
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        isgrounded = true;
     }
 }
