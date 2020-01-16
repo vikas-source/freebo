@@ -4,67 +4,48 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-
-    //Movement
-    public float speed;
-    public float jump;
-    float xpos;
-    float xmove;
-    
+    float jump;
+    bool isgrounded;
+    bool isdead;
     Rigidbody2D rb;
     Animator anim;
-    [SerializeField]
-    AnimationCurve moveCurve;
+    BoxCollider2D bc2d;
+    SpriteRenderer sp;
 
-    //Grounded 
-    bool isGrounded = false;
-
+    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        bc2d = GetComponent<BoxCollider2D>();
+        sp = GetComponent<SpriteRenderer>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        //Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+      if (isdead ==false)
+       {
+            rb.velocity = new Vector3(0f, -1f, 0f);
+
+          if (Input.GetKey(KeyCode.D))
             {
-            rb.AddForce(Vector2.up * jump);
-            anim.SetBool("isjump", true);
-            anim.SetBool("isRun", false);
-            isGrounded = false;
+                rb.velocity = new Vector3(1f, 0f, 0f);
+                anim.SetBool("isRun", true);
+            }
 
-        }
-
-        
-
-        xpos = Input.GetAxis("Horizontal");
-        
-        
-            rb.velocity = new Vector2(xpos * speed /* * moveCurve.Evaluate(Time.deltaTime) */, 0f);
-            anim.SetBool("isRun", true);
-            anim.SetBool("isjump", false);
-
-
-        if (Input.anyKey == false)
-        {
-            anim.SetBool("isRun", false);
-            anim.SetBool("isjump", false);
-        }
-        //if (xpos == 0)
-        // {
-
-        //  anim.SetBool("isRun", false);
-
-        //}
-
-
+          if(Input.GetKey(KeyCode.A))
+            {
+                rb.velocity = new Vector3(-1f, 0f, 0f);
+                anim.SetBool("isRun", true);
+            }
+          if(Input.GetKey(KeyCode.Space) && isgrounded == true)
+            {
+                rb.AddForce(Vector2.up * jump);
+                anim.SetBool("isjump", true);
+                anim.SetBool("isRun", false);
+                isgrounded = false;
+            }
+       }
     }
-    //Check if Grounded
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        isGrounded = true;
-    }
-    
 }
