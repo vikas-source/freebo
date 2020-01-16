@@ -26,8 +26,7 @@ public class movement : MonoBehaviour
     {
       if (isdead ==false)
        {
-            rb.velocity = new Vector3(0f, -1f, 0f);
-
+            
           if (Input.GetKey(KeyCode.D))
             {
                 rb.velocity = new Vector3(1f, 0f, 0f);
